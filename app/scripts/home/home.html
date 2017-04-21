@@ -1,0 +1,19 @@
+<div class="rows">
+    <div class="columns large-12">
+        <header>
+            <h4>
+                Configure Language keys
+            </h4>
+        </header>
+
+    </div>
+</div>
+
+
+<div class="rows home" ng-repeat="lang in supportedLanguages">
+    <div class="columns large-offset-3 large-6 medium-12">
+        <a class="button expanded round" ui-sref="config({lang:lang.name})">
+            Configure keys for {{lang.name}}
+        </a>
+    </div>
+</div>

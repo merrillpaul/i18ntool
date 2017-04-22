@@ -13,5 +13,8 @@
     "angular-mocks": "^1.4.0"
   },
   "appPath": "app",
-  "moduleName": "p1i18ntoolApp"
+  "moduleName": "p1i18ntoolApp",
+  "resolutions": {
+    "angular": "1.6.4"
+  }
 }

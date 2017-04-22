@@ -164,6 +164,17 @@ module.exports = function (grunt) {
 
     // Copies remaining files to places other tasks can use
     copy: {
+      ngtemplates: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            'scripts/{,*/}*.html',
+          ]
+        }]
+      },
       dist: {
         files: [{
           expand: true,
@@ -230,7 +241,7 @@ module.exports = function (grunt) {
         files: [{
           expand: true,
           cwd: '<%= yeoman.dist %>',
-          src: ['*.html', 'views/{,*/}*.html'],
+          src: ['*.html', 'views/{,*/}*.html', 'scripts/{,*/}*.html'],
           dest: '<%= yeoman.dist %>'
         }]
       }
@@ -414,6 +425,12 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
+      ngtemplates: {
+        files: ['<%= yeoman.app %>/scripts/{,*/}*.html'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
@@ -466,6 +483,7 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'requirejs:dist',
+    'copy:ngtemplates',
     'htmlmin'
   ]);
 

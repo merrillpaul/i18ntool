@@ -175,6 +175,17 @@ module.exports = function (grunt) {
           ]
         }]
       },
+      data: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.app %>',
+          dest: '<%= yeoman.dist %>',
+          src: [
+            'data/{,*/}*.json',
+          ]
+        }]
+      },
       dist: {
         files: [{
           expand: true,
@@ -431,6 +442,12 @@ module.exports = function (grunt) {
           livereload: '<%= connect.options.livereload %>'
         }
       },
+      data: {
+        files: ['<%= yeoman.app %>/data/{,*/}*.json'],
+        options: {
+          livereload: '<%= connect.options.livereload %>'
+        }
+      },
       jsTest: {
         files: ['test/spec/{,*/}*.js'],
         tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
@@ -484,6 +501,7 @@ module.exports = function (grunt) {
     'usemin',
     'requirejs:dist',
     'copy:ngtemplates',
+    'copy:data',
     'htmlmin'
   ]);
 

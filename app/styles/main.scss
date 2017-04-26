@@ -94,15 +94,38 @@ body {
   position: fixed;
   width: 100%;
 }
+.configCtr {
+  input {
+    height: 1.4rem !important;
+    margin: 0 0 .5rem !important;
+    font-size: 0.8rem !important;
+    display: inline-block;
+  }
+  .configFld {
+    span.label {
+      width: 100%;
+    }
+  }
+}
 
-input {
-  height: 1.4rem !important;
-  margin: 0 0 .5rem !important;
-  font-size: 0.8rem !important;
+.home {
+  .columns {
+    position: relative;
+  }
+  .badge {
+    position: absolute;
+    cursor: pointer;
+    left: 6px;
+    top: -4px;
+  }
 }
 
 [ng\:cloak], [ng-cloak], .ng-cloak {
   display: none !important;
+}
+
+.off-canvas {
+  background: #000;
 }
 
 

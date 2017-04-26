@@ -1,96 +1,21 @@
-define(['app'], function (app) {
+define(['app', 'services/i18nservice'], function (app) {
     'use strict';
-    app.controller('configCtrl', function ($scope, $stateParams, $rootScope) {
-        $scope.currentLang = $stateParams.lang;
-        $rootScope.pageTitle = 'For ' + $scope.currentLang;
-        $rootScope.editing = true;
-    
-        $scope.jsonItems = [
-            {
-                name: 'examinee',
-                items: [
-                    {
-                        name: 'list',
-                        items: [
-                            {
-                                name: 'title',
-                                value: 'Examinee List',
-                                otherValue: 'French list'
-                            }
-                        ]
-                    },
-                    {
-                        name: 'grid',
-                        items: [
-                            {
-                                name: 'title',
-                                items: [
-                                    {
-                                        name: 'firstName',
-                                        value: 'First Name',
-                                        otherValue: ''
-                                    },
-                                    {
-                                        name: 'lastName',
-                                        value: 'Last Name',
-                                        otherValue: ''
-                                    },
-                                    {
-                                        name: 'dob',
-                                        value: 'DOB',
-                                        otherValue: ''
-                                    },
-                                    {
-                                        name: 'gender',
-                                        value: 'Gender',
-                                        otherValue: ''
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        name: 'examineeDetails',
-                        items: [
-                            {
-                                name: 'create',
-                                items: [
-                                    {
-                                        name: 'title',
-                                        value: 'Create Examinee',
-                                        otherValue: ''
-                                    }
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            },
-            {
-                name: 'login',
-                items: [
-                    {
-                        name: 'title',
-                        value: 'Project One login',
-                        otherValue: ''
-                    },
-                    {
-                        name: 'form',
-                        items: [
-                            {
-                                name: 'username',
-                                value: 'Username',
-                                otherValue: 'Nom'
-                            },
-                            {
-                                name: 'password',
-                                value: 'Password',
-                                otherValue: 'Carte'
-                            }
-                        ]
-                    }
-                ]
-            }
-        ];
-    });
+    app.controller('configCtrl', ['$scope', '$stateParams', '$rootScope', 'i18nservice',
+        function ($scope, $stateParams, $rootScope, i18nservice) {
+            $scope.currentLang = $stateParams.lang;
+            $rootScope.pageTitle = 'For ' + $scope.currentLang;
+            $rootScope.editing = true;
+            $scope.jsonItems = i18nservice.getWorkingJson($scope.currentLang);
+
+            $scope.$watch(function () {
+                i18nservice.saveDraft($scope.currentLang, $scope.jsonItems);
+            });
+
+            $scope.$on('clear-current', function () {
+                console.log('Clear current in config', $scope.currentLang);
+            });
+            $scope.$on('download-current', function () {
+                i18nservice.downloadCurrent($scope.currentLang, $scope.jsonItems);
+            });
+        }]);
 });

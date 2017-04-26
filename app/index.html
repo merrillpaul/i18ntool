@@ -27,31 +27,48 @@
 
   <!-- Add your site or application content here -->
   <div data-sticky-container>
-    <div id="p1menu" class="title-bar" data-top-anchor="1"  data-sticky data-options="marginTop:0; width: 100%" > 
+    <div id="p1menu" class="title-bar" data-top-anchor="1" data-sticky data-options="marginTop:0; width: 100%">
       <div class="title-bar-left">
-      <button class="menu-icon" type="button"></button>
-      <span class="title-bar-title">ProjectOne I18n Tool: <label  class="ng-cloak label warning" ng-if="pageTitle">{{pageTitle}}</label></span>
-    </div>     
-      
-      <div class="title-bar-right"><a ui-sref="home" >Home</a></div>
-    </div>
-  </div>
-  <div class="rows">
-    <div class="columns large-12">
-
+        <button class="menu-icon" type="button" data-toggle="offCanvas"></button>
+        <span class="title-bar-title">ProjectOne I18n Tool: <label  class="ng-cloak label warning" ng-if="pageTitle">{{pageTitle}}</label></span>
+      </div>
+      <div class="title-bar-right">
+        <a ui-sref="home">Home</a>
+      </div>
     </div>
   </div>
 
-  <div class="rows">
-    <div class="columns large-12" ui-view></div>
+  <div class="off-canvas position-left" id="offCanvas" data-off-canvas>   
+
+    <!-- Menu -->
+    <ul class="vertical menu">
+      <li><a data-close ui-sref="home">Home</a></li>
+      <li><a data-close ng-click="clearCurrent()">Clear and Reload</a></li>  
+      <li><a data-close ng-click="downloadCurrent()" >Download Zip</a></li>    
+    </ul>
+
   </div>
 
-  <div class="rows">
-    <div class="columns large-12">
-      <div class="footer">
+  <div class="off-canvas-content" data-off-canvas-content>
+
+    <div class="rows">
+      <div class="columns large-12">
 
       </div>
     </div>
+
+    <div class="rows">
+      <div class="columns large-12" ui-view></div>
+    </div>
+
+    <div class="rows">
+      <div class="columns large-12">
+        <div class="footer">
+
+        </div>
+      </div>
+    </div>
+    
   </div>
 
   <script>
@@ -60,7 +77,7 @@
     });
   </script>
   <script src="bower_components/requirejs/require.js" data-main="scripts/main.js"></script>
-  
+
 </body>
 
 </html>

@@ -8,7 +8,8 @@ require.config({
     'foundation-sites': '../../bower_components/foundation-sites/dist/js/foundation',
     jquery: '../../bower_components/jquery/dist/jquery',
     jszip: '../../bower_components/jszip/dist/jszip',
-    'file-saver': '../../bower_components/file-saver/FileSaver'
+    'file-saver': '../../bower_components/file-saver/FileSaver',
+    lodash: '../../bower_components/lodash/lodash'
   },
   shim: {
     angular: {

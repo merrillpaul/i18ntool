@@ -16,7 +16,17 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                 return workingLangs;
             },
             mergeToBaseJson = function (lang) {
-                console.log(lang);
+                var workingJson = localStorage.getItem(WORKING_JSON + lang),
+                    baseJson, targetJson;
+                if (!workingJson) {
+                    baseJson = $rootScope.originalJsons.find(function (it) { return it.key === 'en'; }).json;
+                    targetJson = $rootScope.originalJsons.find(function (it) { return it.key === lang; }).json;
+                    workingJson = codec.mergeFromBase(lang, baseJson, targetJson);
+                    localStorage.setItem(WORKING_JSON + lang, angular.toJson(workingJson));
+                } else {
+                    workingJson = JSON.parse(workingJson);
+                }
+                return workingJson;
             };
 
         return {
@@ -34,7 +44,17 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                 }).forEach(function (element) {
                     this.removeTempLang(element.key);
                 }, this);
+            },
 
+            removeLang: function (lang) {
+                var currentWorkingLang = $rootScope.workingLangs.find(function (it) {
+                    return it.key === lang;
+                });
+                if (currentWorkingLang.hash === null) {
+                    this.removeTempLang(currentWorkingLang.key);
+                } else {
+                    localStorage.removeItem(WORKING_JSON + lang);
+                }
             },
 
             addLang: function (suffix) {
@@ -78,7 +98,7 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                             localStorage.getItem(WORKING_JSON + lang)
                         );
                     } else {
-                        mergeToBaseJson(lang);
+                        return mergeToBaseJson(lang);
                     }
                 } else {
                     return null;
@@ -86,12 +106,14 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
             },
 
             saveDraft: function (lang, json) {
-                localStorage.setItem(WORKING_JSON + lang, JSON.stringify(json));
+                localStorage.setItem(WORKING_JSON + lang, angular.toJson(json));
             },
 
             downloadCurrent: function (lang, jsonItems) {
                 var dlMap = codec.prepareMapForDownload(jsonItems),
                     zip = new JSZip();
+                
+                zip = zip.folder('app');
                 Object.keys(dlMap).forEach(function (key) {
                     var json = angular.toJson(dlMap[key], true),
                         finalFile = zip;

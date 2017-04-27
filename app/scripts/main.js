@@ -1,5 +1,6 @@
 'use strict';
 require.config({
+  waitSeconds: 10,
   paths: {
     angular: '../../bower_components/angular/angular',
     'angular-mocks': '../../bower_components/angular-mocks/angular-mocks',

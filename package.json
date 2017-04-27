@@ -47,6 +47,8 @@
     "build": "grunt build",
     "start": "grunt serve",
     "prestart": "npm run build",
-    "prebuild": "npm install && bower install"
+    "prebuild": "npm install && bower install",
+    "publish": "grunt buildcontrol",
+    "prepublish": "rm -rf dist/ && npm run build"
   }
 }

@@ -6,13 +6,13 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                 WORKING_JSON = 'workingJson_',
                 workingLangs = function () {
                     var originalLangs = $rootScope.originalLangs,
+                        workingLangKey = localStorage.getItem(WORKING_LANG_KEY),
                         workingLangs;
 
-                    if (localStorage.getItem(WORKING_LANG_KEY) === null) {
+                    if (!workingLangKey) {
                         localStorage.setItem(WORKING_LANG_KEY, JSON.stringify(originalLangs));
-                    }
-                    workingLangs = JSON.parse(localStorage.getItem(WORKING_LANG_KEY));
-
+                    } 
+                    workingLangs = JSON.parse(workingLangKey);
                     $rootScope.workingLangs = workingLangs;
                     return workingLangs;
                 },

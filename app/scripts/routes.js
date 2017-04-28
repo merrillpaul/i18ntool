@@ -5,40 +5,28 @@ define(['angularAMD', 'angular-ui-router', 'services/i18nservice'], function (an
 
             var resolver = function () {
                 return {
-                    supportedLangs: ['$http', function ($http) {
-                        return $http.get('data/supportedLangs.json');
-                    }],
-                    allJsons: ['$http', '$rootScope', '$q', 'supportedLangs',
-                        function ($http, $rootScope, $q, supportedLangs) {
-                            $rootScope.originalLangs = supportedLangs.data;
-                            return $q.all(
-                                supportedLangs.data.map(function (lang) {
-                                    return $http.get('data/' + lang.key + '.json')
-                                    .then( function (res) {
-                                        return {
-                                            key: lang.key,
-                                            json: res.data
-                                        };
-                                    })
-                                    .catch( function () {
-                                        return  {
-                                            key: lang.key
-                                        };
-                                    });
-                                })
-                            );
-                        }
-                    ],
-                    jsonInfo: ['$rootScope', 'allJsons', 'i18nservice',
-                        function ($rootScope, allJsons, i18nservice) {
-                            $rootScope.originalJsons = allJsons;
-                            i18nservice.getWorkingLangs();
+                    supportedLangs: ['i18nservice', function (i18nservice) {
+                        return i18nservice.getSupportedLangs();
+                    }],                    
+                    jsonInfo: ['$rootScope', '$state',
+                        function ($rootScope, $state) {
                             $rootScope.clearCurrent = function () {
                                 $rootScope.$broadcast('clear-current');
                             };
                             $rootScope.downloadCurrent = function () {
                                 $rootScope.$broadcast('download-current');
-                            };           
+                            };
+                            $rootScope.resetStale = function () {
+                                $rootScope.$broadcast('reset-stale');
+                            };    
+                            $rootScope.showError = function () {
+                                $rootScope.displayError = true;
+                            };
+                            $rootScope.goIf = function (condition, view, params) {
+                                if (condition) {
+                                    $state.go(view, params);    
+                                }
+                            };   
                             return {
                                 originalLangs: $rootScope.originalLangs,
                                 originalJsons: $rootScope.originalJsons

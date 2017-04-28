@@ -30,7 +30,7 @@
 
 <div class="rows home" ng-repeat="lang in workingLangs">
     <div class="columns large-offset-3 large-6 medium-12">
-        <a class="button expanded round" ui-sref="config({lang:lang.key})">
+        <a ng-disabled="isStale(lang.key)" class="button expanded round" ng-click = "goIf(!isStale(lang.key), 'config', {lang:lang.key})">
             Configure keys for {{lang.key}}
         </a><span ng-if="lang.hash === null" ng-click="removeTempLang(lang.key)" class="badge alert">X</span>
     </div>
@@ -38,7 +38,7 @@
 
 <div class="rows">
     <div class="columns large-offset-3 large-6 medium-6 small-12">
-        <a class="button secondary expanded round" ng-click="promptLang()" >
+        <a  ng-disabled="isBaseStale()" class="button secondary expanded round" ng-click="promptLang()" >
             Add Lang
         </a>
     </div

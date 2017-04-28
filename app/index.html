@@ -30,7 +30,9 @@
     <div id="p1menu" class="title-bar" data-top-anchor="1" data-sticky data-options="marginTop:0; width: 100%">
       <div class="title-bar-left">
         <button class="menu-icon" type="button" data-toggle="offCanvas"></button>
-        <span class="title-bar-title">ProjectOne I18n Tool: <label  class="ng-cloak label warning" ng-if="pageTitle">{{pageTitle}}</label></span>
+        <div class="title-bar-title">ProjectOne I18n Tool          
+          <a ng-if="staleLangs.length > 0" ng-click="showError()" class="ng-cloak badge alert">{{staleLangs.length}}</a>
+        </div>
       </div>
       <div class="title-bar-right">
         <a ui-sref="home">Home</a>
@@ -38,25 +40,46 @@
     </div>
   </div>
 
-  <div class="off-canvas position-left" id="offCanvas" data-off-canvas>   
+  <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
 
     <!-- Menu -->
     <ul class="vertical menu">
       <li><a data-close ui-sref="home">Home</a></li>
-      <li><a data-close ng-click="clearCurrent()">Clear and Reload</a></li>  
-      <li><a data-close ng-click="downloadCurrent()" >Download Zip</a></li>    
+      <li><a data-close ng-click="clearCurrent()">Clear and Reload</a></li>
+      <li ng-if="staleLangs.length > 0" ><a data-close ng-click="resetStale()">Reset Stale Langs</a></li>
+      <li><a data-close ng-click="downloadCurrent()">Download Zip</a></li>
     </ul>
 
   </div>
 
   <div class="off-canvas-content" data-off-canvas-content>
 
-    <div class="rows">
+    <div ng-show="displayError" class="ng-cloak rows">
       <div class="columns large-12">
-
+        <div class="alert callout" data-closable>
+          <h5>Stale langs found</h5>
+          <p class="ng-cloak">The following langs have been changed :- {{staleLangs.join(',')}}</p>
+          <p>
+            <ul>
+              Your options are:
+              <li>
+                Download and save the langs that are available
+              </li>
+               <li>
+                Use the menu reset stale langs
+              </li>
+              <li>
+                Use the menu to clear and reload ( your work might be rolledback )
+              </li>
+            </ul>
+          </p> 
+          <button class="close-button" aria-label="Dismiss alert" type="button" ng-click="displayError=false">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
       </div>
     </div>
-
+    
     <div class="rows ">
       <div class="mainCtr columns large-12" ui-view></div>
     </div>
@@ -68,7 +91,7 @@
         </div>
       </div>
     </div>
-    
+
   </div>
 
   <script>

@@ -93,9 +93,15 @@ body {
 #p1menu {
   position: fixed;
   width: 100%;
+  .title-bar-title {    
+    .badge {      
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
 }
 .mainCtr {
-  margin-top: 3rem;
+  margin-top: 0.5rem;
 }
 .configCtr {
   input {

@@ -5,12 +5,9 @@ version 3.5.0.
 
 ## Development & building
 
-Run `grunt serve` for development preview.
+Run `npm start` for development preview.
 
-Run `grunt` for building.
+Run `npm publish` for building and publishing to GitHub page.
 
-Run `grunt serve:dist` for building and previewing.
+Run `npm run build` for building.
 
-## Testing
-
-Running `grunt test` will run the unit tests.

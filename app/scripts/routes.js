@@ -5,7 +5,8 @@ define(['angularAMD', 'angular-ui-router', 'services/i18nservice'], function (an
 
             var resolver = function () {
                 return {
-                    supportedLangs: ['i18nservice', function (i18nservice) {
+                    supportedLangs: ['i18nservice', '$rootScope' ,function (i18nservice, $rootScope) {
+                        $rootScope.staleLangs = [];
                         return i18nservice.getSupportedLangs();
                     }],                    
                     jsonInfo: ['$rootScope', '$state',

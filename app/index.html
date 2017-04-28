@@ -30,7 +30,7 @@
     <div id="p1menu" class="title-bar" data-top-anchor="1" data-sticky data-options="marginTop:0; width: 100%">
       <div class="title-bar-left">
         <button class="menu-icon" type="button" data-toggle="offCanvas"></button>
-        <div class="title-bar-title">ProjectOne I18n Tool          
+        <div class="title-bar-title">ProjectOne I18n Tool  <span class="ng-cloak"> {{pageTitle}}    <span>    
           <a ng-if="staleLangs.length > 0" ng-click="showError()" class="ng-cloak badge alert">{{staleLangs.length}}</a>
         </div>
       </div>
@@ -46,7 +46,7 @@
     <ul class="vertical menu">
       <li><a data-close ui-sref="home">Home</a></li>
       <li><a data-close ng-click="clearCurrent()">Clear and Reload</a></li>
-      <li ng-if="staleLangs.length > 0" ><a data-close ng-click="resetStale()">Reset Stale Langs</a></li>
+      <li ng-if="staleLangs.length > 0" ><a ui-sref="home" data-close ng-click="resetStale()">Reset Stale Langs</a></li>
       <li><a data-close ng-click="downloadCurrent()">Download Zip</a></li>
     </ul>
 

@@ -8,7 +8,7 @@ define(['app', 'services/i18nservice'], function (app) {
                 });
             };
             $scope.currentLang = $stateParams.lang;
-            $rootScope.pageTitle = 'For ' + $scope.currentLang;
+            $rootScope.pageTitle = '- ' + $scope.currentLang;
             $rootScope.editing = true;
             $scope.jsonItems = i18nservice.getWorkingJson($scope.currentLang);
             register();

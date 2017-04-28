@@ -1,10 +1,8 @@
 define(['app', 'services/i18nservice'], function (app) {
     'use strict';
-    app.controller('homeCtrl', ['$rootScope', '$scope', 'i18nservice', '$window', '$timeout',
-        function ($rootScope, $scope, i18nservice, $window, $timeout) {
+    app.controller('homeCtrl', ['$rootScope', '$scope', 'i18nservice', '$window',
+        function ($rootScope, $scope, i18nservice, $window) {
             var modal = angular.element('#askSuffix'), promptModal;
-            $rootScope.pageTitle = 'Select Language';
-            $rootScope.editing = false;
             $scope.errorNew = false;
 
             $scope.promptLang = function () {
@@ -44,13 +42,7 @@ define(['app', 'services/i18nservice'], function (app) {
 
             $scope.$on('clear-current', function () {
                 i18nservice.removeAllTempLangs();
-            });
-
-            $scope.$on('reset-stale', function () {
-                $timeout(function () {
-                    i18nservice.resetStale();
-                }, 1);                
-            });
+            });            
 
         }]);
 });

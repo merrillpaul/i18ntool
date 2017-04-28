@@ -189,9 +189,7 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                 getDecodedJson: function (lang) {
                     return JSON.parse(localStorage.getItem(WORKING_JSON + lang));
                 },
-
-
-
+                
                 getWorkingJson: function (lang) {
                     var currentWorkingLang = $rootScope.workingLangs.find(function (it) {
                         return it.key === lang;

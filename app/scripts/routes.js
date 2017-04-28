@@ -5,12 +5,13 @@ define(['angularAMD', 'angular-ui-router', 'services/i18nservice'], function (an
 
             var resolver = function () {
                 return {
-                    supportedLangs: ['i18nservice', '$rootScope' ,function (i18nservice, $rootScope) {
-                        $rootScope.staleLangs = [];
-                        return i18nservice.getSupportedLangs();
-                    }],                    
-                    jsonInfo: ['$rootScope', '$state',
-                        function ($rootScope, $state) {
+                    supportedLangs: ['i18nservice', '$rootScope',
+                        function (i18nservice, $rootScope) {
+                            $rootScope.staleLangs = [];
+                            return i18nservice.getSupportedLangs();
+                        }],
+                    jsonInfo: ['$rootScope', '$state', 'i18nservice', '$timeout',
+                        function ($rootScope, $state, i18nservice, $timeout) {
                             $rootScope.clearCurrent = function () {
                                 $rootScope.$broadcast('clear-current');
                             };
@@ -18,16 +19,19 @@ define(['angularAMD', 'angular-ui-router', 'services/i18nservice'], function (an
                                 $rootScope.$broadcast('download-current');
                             };
                             $rootScope.resetStale = function () {
-                                $rootScope.$broadcast('reset-stale');
-                            };    
+                                $timeout(function () {
+                                    i18nservice.resetStale();
+                                }, 1);
+                            };
+
                             $rootScope.showError = function () {
                                 $rootScope.displayError = true;
                             };
                             $rootScope.goIf = function (condition, view, params) {
                                 if (condition) {
-                                    $state.go(view, params);    
+                                    $state.go(view, params);
                                 }
-                            };   
+                            };
                             return {
                                 originalLangs: $rootScope.originalLangs,
                                 originalJsons: $rootScope.originalJsons

@@ -1,5 +1,6 @@
 'use strict';
 require.config({
+  urlArgs: "bust=v2",
   waitSeconds: 10,
   paths: {
     angular: '../../bower_components/angular/angular',

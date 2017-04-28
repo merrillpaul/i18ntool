@@ -1,8 +1,10 @@
 define(['app', 'services/i18nservice'], function (app) {
     'use strict';
-    app.controller('homeCtrl', ['$rootScope', '$scope', 'i18nservice', '$window',
-        function ($rootScope, $scope, i18nservice, $window) {
+    app.controller('homeCtrl', ['$rootScope', '$scope', 'i18nservice', '$window', 'jsonInfo',
+        function ($rootScope, $scope, i18nservice, $window, jsonInfo) {
             var modal = angular.element('#askSuffix'), promptModal;
+            console.log('homeCtrl injected with jsoninfo', jsonInfo);
+            console.log('homeCtrl has $rootScope.workingLangs', $rootScope.workingLangs);
             $scope.errorNew = false;
 
             $scope.promptLang = function () {

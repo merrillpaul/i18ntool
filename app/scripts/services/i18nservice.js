@@ -1,7 +1,7 @@
 define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
     'use strict';
-    app.service('i18nservice', ['$rootScope', '$window', '$http', '$q',
-        function ($rootScope, $window, $http, $q) {
+    app.service('i18nservice', ['$rootScope', '$window',
+        function ($rootScope, $window) {
             var WORKING_LANG_KEY = 'workingLangs',
                 WORKING_JSON = 'workingJson_',
                 workingLangs = function () {
@@ -10,7 +10,8 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                         workingLangs;
 
                     if (!workingLangKey) {
-                        localStorage.setItem(WORKING_LANG_KEY, JSON.stringify(originalLangs));
+                        workingLangKey = JSON.stringify(originalLangs);
+                        localStorage.setItem(WORKING_LANG_KEY, workingLangKey);
                     } 
                     workingLangs = JSON.parse(workingLangKey);
                     $rootScope.workingLangs = workingLangs;
@@ -32,59 +33,12 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
 
             return {
 
-                getSupportedLangs: function () {
-                    var promise = $q.defer(),
-                        that = this,
-                        rejection = function (err) {
-                            promise.reject(err);
-                        };
-                    $http.get('data/supportedLangs.json?_q=' + Date.now())
-                        .then(function (res) {
-                            var staleLangs;
-                            $rootScope.originalLangs = res.data;
-                            staleLangs = that.checkStaleLangs();
-                            $q.all(
-                                res.data.map(function (lang) {
-                                    var url = 'data/' + lang.key + '.json';
-                                    if (staleLangs.indexOf(lang.key) >= 0) {
-                                        // bust the cache
-                                        url += '?_dt=' + Date.now();
-                                    }
-                                    return $http.get(url)
-                                        .then(function (res) {
-                                            return {
-                                                key: lang.key,
-                                                json: res.data
-                                            };
-                                        })
-                                        .catch(function () {
-                                            return {
-                                                key: lang.key
-                                            };
-                                        });
-                                })
-                            )
-                                .then(function (res) {
-                                    $rootScope.originalJsons = res;
-                                    promise.resolve(res);
-                                })
-                                .catch(rejection);
-                        })
-                        .catch(rejection);
-                    return promise;
-                },
-
-                resetAll: function () {
-
-                },
-
                 resetStale: function () {
                     var anyNewLangs = $rootScope.workingLangs.filter(function (it) { return it.hash === null; }),
                     baseLang = $rootScope.originalLangs.find(function (it) {
                             return it.key === 'en';
                         }),
                         that = this;
-                   
                     // removing the supported langs from storage and reseting it
                     localStorage.removeItem(WORKING_LANG_KEY);
                     workingLangs();
@@ -126,8 +80,7 @@ define(['app', './codec', 'jszip', 'file-saver'], function (app, codec, JSZip) {
                             }
                         });
                     }
-                    $rootScope.displayError = $rootScope.staleLangs.length > 0;
-                    this.getWorkingLangs();
+                    $rootScope.displayError = $rootScope.staleLangs.length > 0;                    
                     return $rootScope.staleLangs;
                 },
 

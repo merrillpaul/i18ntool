@@ -9,7 +9,7 @@ define(['angularAMD', 'angular-ui-router', 'services/i18nservice'], function (an
                     supportedLangs: ['$http', '$rootScope', function ($http, $rootScope) {
                         $rootScope.staleLangs = [];
                         console.log('routes.js Getting supported langs');
-                        return $http.get('data/supportedLangs.json?_q=' + Date.now());
+                        return $http.get('data/langs.json?_q=' + Date.now());
                     }],
 
                     allJsons: ['$http', '$rootScope', '$q', 'i18nservice', 'supportedLangs',

@@ -11,6 +11,7 @@ define(['lodash'], function (_) {
                 };
             if (angular.isString(val)) {
                 item.value = val;
+                item.items = [];
                 if (valueModifier) {
                     valueModifier(item);
                 }
@@ -30,7 +31,7 @@ define(['lodash'], function (_) {
                     items.forEach(function (item) {
                         var inMap;
                         dMap[item.name] = {};
-                        if (item.items) {
+                        if (item.items.length > 0) {
                             visitor(item.items, dMap[item.name]);
                         } else if (item.value) {
                             if (item.name === 'srcFile') {

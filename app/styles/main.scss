@@ -111,6 +111,12 @@ body {
     display: inline-block;
   }
   .configFld {
+    display: flex;
+    .columns {
+      flex: 1;
+      max-width: 50%;
+      margin-right: 3px;
+    }
     span.label {
       width: 100%;
     }

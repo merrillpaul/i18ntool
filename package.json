@@ -1,10 +1,11 @@
 {
   "name": "p1i18ntool",
+  "version": "0.1",
   "private": true,
   "devDependencies": {
     "autoprefixer-core": "^6.0.1",
     "generator-karma-require": "^1.1.0",
-    "grunt": "^1.4.1",
+    "grunt": "^1.5.3",
     "grunt-autoprefixer": "^3.0.4",
     "grunt-bower-requirejs": "^2.0.0",
     "grunt-build-control": "^0.7.1",
@@ -37,7 +38,7 @@
     "karma-jasmine": "*",
     "karma-phantomjs-launcher": "*",
     "karma-requirejs": "*",
-    "serve-static": "^1.14.1",
+    "serve-static": "^1.15.0",
     "time-grunt": "^2.0.0"
   },
   "engines": {
@@ -48,7 +49,7 @@
     "build": "grunt build",
     "start": "grunt serve",
     "prestart": "npm run build",
-    "prebuild": "npm install && bower install",
+    "prebuild": "npm install --force && bower install",
     "publish": "rm -rf dist/ && npm run build && grunt buildcontrol && rm -rf dist/"
   }
 }
